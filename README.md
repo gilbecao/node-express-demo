@@ -3,6 +3,8 @@ RESTful Web Services with Node.js and Express
 
 - Nodejs
 - Express
+- Nodemon
+- ESLint
 - MongoDB
 
 # Useful commands
