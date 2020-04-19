@@ -15,7 +15,6 @@
         "ecmaVersion": 2018
     },
     "rules": {
-        "comma-dangle": "off",
-        "indent": ["error", 4]
+        "comma-dangle": "off"
     }
 }

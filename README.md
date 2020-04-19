@@ -5,7 +5,7 @@ RESTful Web Services with Node.js and Express
 - Express
 - Nodemon
 - ESLint
-- MongoDB
+- Mongoose
 
 # Useful commands
 - `npm i` to install dependencies
