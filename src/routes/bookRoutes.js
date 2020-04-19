@@ -1,47 +1,35 @@
 const express = require('express');
 
+const { MongoClient, ObjectID } = require('mongodb');
+const debug = require('debug')('app:bookRoutes');
+
 const bookRouter = express.Router();
-const sql = require('mssql');
+
+const url = 'mongodb://localhost:27017';
+const dbName = 'libraryApp';
 
 function router(nav) {
-  const books = [
-    {
-      title: 'El heredero',
-      genre: 'Novela',
-      author: 'Rafael Tarradas Bultó',
-      read: false
-    },
-    {
-      title: 'El largo camino a casa',
-      genre: 'Ficción',
-      author: 'Alan Hlad',
-      read: true
-    },
-    {
-      title: 'El mapa de los afectos',
-      genre: 'Cuentos',
-      author: 'Ana Merino',
-      read: false
-    },
-    {
-      title: 'Y Julia retó a los dioses',
-      genre: 'Novela',
-      author: 'Santiago Posteguillo',
-      read: false
-    },
-  ];
-
   bookRouter.route('/')
     .get((req, res) => {
       (async function query() {
-        const request = new sql.Request();
-        const { recordset } = await request.query('select * from books');
+        let client;
+        try {
+          client = await MongoClient.connect(url);
+          debug('Connected correctly to the server');
 
-        res.render('bookListView', {
-          nav,
-          title: 'Library',
-          books: recordset
-        });
+          const db = client.db(dbName);
+
+          const collection = await db.collection('books');
+          const books = await collection.find().toArray();
+
+          res.render('bookListView', {
+            nav,
+            title: 'Library',
+            books
+          });
+        } catch (error) {
+          debug(error);
+        }
       }());
     });
 
@@ -49,11 +37,21 @@ function router(nav) {
     .all((req, res, next) => {
       (async function query() {
         const { id } = req.params;
-        const request = new sql.Request();
-        const { recordset } = await request.input('id', sql.Int, id)
-          .query('select * from books where id = @id');
-        [req.book] = recordset;
-        next();
+        let client;
+        try {
+          client = await MongoClient.connect(url);
+          debug('Connected correctly to the server');
+
+          const db = client.db(dbName);
+
+          const collection = await db.collection('books');
+          const book = await collection.findOne({ _id: ObjectID(id) });
+
+          req.book = book;
+          next();
+        } catch (error) {
+          debug(error);
+        }
       }());
     })
     .get((req, res) => {
