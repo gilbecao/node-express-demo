@@ -9,12 +9,14 @@ const books = [
         title: 'El heredero',
         genre: 'Novela',
         author: 'Rafael Tarradas Bultó',
+        bookId: 656,
         read: false
     },
     {
         title: 'El largo camino a casa',
         genre: 'Ficción',
         author: 'Alan Hlad',
+        bookId: 24280,
         read: true
     },
     {
