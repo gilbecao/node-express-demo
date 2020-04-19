@@ -14,7 +14,7 @@ function router(nav) {
             });
         })
         .post(passport.authenticate('local', {
-            successRedirect: '/auth/profile',
+            successRedirect: '/books',
             failureRedirect: '/'
         }));
 
