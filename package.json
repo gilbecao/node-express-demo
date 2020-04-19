@@ -6,11 +6,12 @@
   "scripts": {
     "start": "set DEBUG=app, app:* & nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint ./models/ app.js --fix"
+    "lint": "eslint ./models/ ./routes/ app.js --fix"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "chalk": "^4.0.0",
     "debug": "^4.1.1",
     "express": "^4.17.1",
