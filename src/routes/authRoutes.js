@@ -6,7 +6,25 @@ const passport = require('passport');
 const authRouter = express.Router();
 
 function router(nav) {
+    authRouter.route('/signIn')
+        .get((req, res) => {
+            res.render('signin', {
+                nav,
+                title: 'Sign In'
+            });
+        })
+        .post(passport.authenticate('local', {
+            successRedirect: '/auth/profile',
+            failureRedirect: '/'
+        }));
+
     authRouter.route('/signUp')
+        .get((req, res) => {
+            res.render('signup', {
+                nav,
+                title: 'Register'
+            });
+        })
         .post((req, res) => {
             const { username, password } = req.body;
             const url = 'mongodb://localhost:27017';
@@ -36,17 +54,11 @@ function router(nav) {
             }());
         });
 
-    authRouter.route('/signIn')
+    authRouter.route('/signOut')
         .get((req, res) => {
-            res.render('signin', {
-                nav,
-                title: 'Sign In'
-            });
-        })
-        .post(passport.authenticate('local', {
-            successRedirect: '/auth/profile',
-            failureRedirect: '/'
-        }));
+            req.logOut();
+            res.redirect('/');
+        });
 
     authRouter.route('/profile')
         .all((req, res, next) => {
@@ -57,7 +69,11 @@ function router(nav) {
             }
         })
         .get((req, res) => {
-            res.json(req.user);
+            res.render('profile', {
+                nav,
+                title: 'Profile',
+                user: req.user
+            });
         });
 
     return authRouter;

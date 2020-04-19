@@ -28,7 +28,7 @@ app.set('view engine', 'ejs');
 
 const nav = [
     { link: '/books', title: 'Books' },
-    { link: '/authors', title: 'Authors' }
+    { link: '/auth/profile', title: 'Profile' }
 ];
 const bookRouter = require('./src/routes/bookRoutes')(nav);
 const adminRouter = require('./src/routes/adminRoutes')(nav);
@@ -40,10 +40,14 @@ app.use('/admin', adminRouter);
 app.use('/auth', authRouter);
 
 app.get('/', (req, res) => {
-    res.render('index', {
-        nav,
-        title: 'Library'
-    });
+    if (req.user) {
+        res.redirect('/books');
+    } else {
+        res.render('signin', {
+            nav,
+            title: 'Library'
+        });
+    }
 });
 
 app.listen(port, () => {
