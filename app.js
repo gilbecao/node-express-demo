@@ -11,8 +11,13 @@ const port = process.env.PORT || 3000;
 
 app.use(morgan('tiny'));
 
-// eslint-disable-next-line no-unused-vars
-const db = mongoose.connect('mongodb://localhost/bookAPI');
+if (process.env.ENV === 'Test') {
+    // eslint-disable-next-line no-unused-vars
+    const db = mongoose.connect('mongodb://localhost/bookAPI_Test').catch(console.log);
+} else {
+    // eslint-disable-next-line no-unused-vars
+    const db = mongoose.connect('mongodb://localhost/bookAPI_Prod').catch(console.log);
+}
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,6 +30,8 @@ app.get('/', (req, res) => {
     res.send('App works!');
 });
 
-app.listen(port, () => {
+app.server = app.listen(port, () => {
     debug(`listening on port ${chalk.green(port)}`);
 });
+
+module.exports = app;
