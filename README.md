@@ -1,12 +1,9 @@
 # node-express-demo
-Playing with backend technology
+RESTful Web Services with Node.js and Express
 
 - Nodejs
 - Express
 - MongoDB
-- SQL
-- pug
-- EJS
 
 # Useful commands
 - `npm i` to install dependencies
