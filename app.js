@@ -13,10 +13,10 @@ app.use(morgan('tiny'));
 
 if (process.env.ENV === 'Test') {
     // eslint-disable-next-line no-unused-vars
-    const db = mongoose.connect('mongodb://localhost/bookAPI_Test').catch(console.log);
+    const db = mongoose.connect('mongodb://localhost/bookAPI_Test');
 } else {
     // eslint-disable-next-line no-unused-vars
-    const db = mongoose.connect('mongodb://localhost/bookAPI_Prod').catch(console.log);
+    const db = mongoose.connect('mongodb://localhost/bookAPI');
 }
 
 app.use(bodyParser.json());
