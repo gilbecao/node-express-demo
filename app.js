@@ -14,21 +14,25 @@ const Book = require('./models/bookModel');
 
 const bookRouter = express.Router();
 bookRouter.route('/books')
-  .get((req, res) => {
-    Book.find((error, books) => {
-      if (error) {
-        return res.send(error);
-      }
-      return res.send(books);
+    .get((req, res) => {
+        const query = {};
+        if (req.query.genre) {
+            query.genre = req.query.genre;
+        }
+        Book.find(query, (error, books) => {
+            if (error) {
+                return res.send(error);
+            }
+            return res.send(books);
+        });
     });
-  });
 
 app.use('/api', bookRouter);
 
 app.get('/', (req, res) => {
-  res.send('App works!');
+    res.send('App works!');
 });
 
 app.listen(port, () => {
-  debug(`listening on port ${chalk.green(port)}`);
+    debug(`listening on port ${chalk.green(port)}`);
 });
