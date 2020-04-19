@@ -6,6 +6,9 @@ RESTful Web Services with Node.js and Express
 - Nodemon
 - ESLint
 - Mongoose
+- Mocha
+- Should
+- Sinon
 
 # Useful commands
 - `npm i` to install dependencies

@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "set DEBUG=app, app:* & nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint ./models/ ./routes/ app.js --fix"
+    "test": "mocha tests/**/*Test.js",
+    "lint": "eslint ./models/ ./routes/ ./controllers/ ./tests/ app.js --fix"
   },
   "author": "",
   "license": "ISC",
@@ -23,7 +23,10 @@
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-plugin-import": "^2.20.2"
+    "eslint-plugin-import": "^2.20.2",
+    "mocha": "^7.1.1",
+    "should": "^13.2.3",
+    "sinon": "^9.0.2"
   },
   "nodemonConfig": {
     "restartable": "rs",
