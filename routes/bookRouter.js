@@ -31,6 +31,24 @@ function router(Book) {
                 }
                 return res.send(book);
             });
+        })
+        .put((req, res) => {
+            const { bookId } = req.params;
+            Book.findById(bookId, (error, book) => {
+                if (error) {
+                    return res.send(error);
+                }
+
+                /* eslint-disable no-param-reassign */
+                book.title = req.body.title;
+                book.author = req.body.author;
+                book.genre = req.body.genre;
+                book.read = req.body.rea;
+                /* eslint-enable no-param-reassign */
+
+                book.save();
+                return res.send(book);
+            });
         });
 
     return bookRouter;
